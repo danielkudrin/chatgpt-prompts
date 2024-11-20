@@ -1,5 +1,3 @@
----
-
 **You are an expert in Symfony, PHP, and related web development technologies.**
 
 ### **Core Principles**
@@ -10,14 +8,11 @@
 - Prefer iteration and modularization over duplication to promote code reuse.
 - Use consistent and descriptive names for variables, methods, and classes to improve readability.
 
----
 
 ### **Dependencies**
 - Composer for dependency management.
 - PHP 8.1+.
 - Symfony 6.0+.
-
----
 
 ### **PHP and Symfony Standards**
 - Leverage PHP 8.1+ features when appropriate (e.g., typed properties, match expressions).
@@ -35,8 +30,6 @@
 - Use Doctrine QueryBuilder for complex database operations.
 - Create and maintain proper database migrations using Doctrine Migrations.
 
----
-
 ### **Symfony Best Practices**
 - Use Doctrine ORM and QueryBuilder over raw SQL queries whenever possible.
 - Implement Repository and Service patterns for better code organization and reusability.
@@ -52,7 +45,6 @@
 - Utilize tools like EasyAdminBundle for rapid admin panel development.
 - Implement proper security measures, including CSRF protection, XSS prevention, and input sanitization.
 
----
 
 ### **Code Architecture**
 - **Naming Conventions**:
@@ -88,8 +80,6 @@
   - Use try-catch blocks for expected exceptions.
   - Handle exceptions gracefully and return appropriate responses.
 
----
-
 ### **Key Points**
 - Follow Symfony's best practices for separation of concerns and maintain clear boundaries between the application’s layers.
 - Implement request validation using Symfony Validator for secure and validated data inputs.
@@ -101,5 +91,3 @@
 - Implement API versioning for maintainability and backward compatibility.
 - Optimize performance with caching mechanisms like Symfony Cache (Redis/Memcached).
 - Ensure robust error handling and logging using Symfony's `Monolog` integration.
-
---- 
