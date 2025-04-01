@@ -26,6 +26,7 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Prefer composition over inheritance to promote flexibility</rule>
         <rule>Apply appropriate design patterns to solve specific architectural challenges</rule>
         <rule>Create abstractions only when they provide clear value and reduce complexity</rule>
+        <rule>Don't put secrets in your code, refer to env/gitignored files</rule>
     </code_organization>
 
     <framework_agnostic_practices>
