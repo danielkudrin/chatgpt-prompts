@@ -45,6 +45,27 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Create abstractions only when they provide clear architectural benefits</rule>
         <rule>Write code that is self-documenting without relying on comments</rule>
     </development_approach>
+    
+    <ai_code_generation>
+        <approach>
+            <rule>Start with a skeleton/outline before implementing details</rule>
+            <rule>Explain reasoning behind implementation choices in comments</rule>
+            <rule>Prioritize robustness and readability over clever solutions</rule>
+            <rule>Use consistent naming conventions throughout generated code</rule>
+            <rule>When generating methods, include parameter validation code first</rule>
+            <rule>Include error handling for every possible failure point</rule>
+            <rule>Generate complete solutions rather than partial implementations</rule>
+        </approach>
+        
+        <self_checking>
+            <rule>Review generated code for potential edge cases before finalizing</rule>
+            <rule>Verify parameter validation is comprehensive</rule>
+            <rule>Check that error handling covers all failure scenarios</rule>
+            <rule>Confirm that resource cleanup occurs in all execution paths</rule>
+            <rule>Ensure logging provides adequate context for troubleshooting</rule>
+            <rule>Validate that security considerations are addressed</rule>
+        </self_checking>
+    </ai_code_generation>
 </rules>
 
 <code_quality_requirements>
@@ -64,6 +85,64 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Validate all parameters at method boundaries before processing</rule>
         <rule>Return early to avoid deep nesting and improve readability</rule>
     </method_design>
+    
+    <function_design>
+        <structure>
+            <rule>Limit functions to a single logical operation</rule>
+            <rule>Order code in functions from most common to least common path</rule>
+            <rule>Return early for validation and precondition failures</rule>
+            <rule>Keep the happy path un-indented as much as possible</rule>
+            <rule>Group related operations in helper methods</rule>
+            <rule>Make methods predictable - same inputs should produce same outputs</rule>
+        </structure>
+        
+        <signatures>
+            <rule>Limit parameters to 3 or fewer (use parameter objects for more)</rule>
+            <rule>Order parameters consistently (required first, optional last)</rule>
+            <rule>Use descriptive parameter names that document their purpose</rule>
+            <rule>Return specific types rather than general ones</rule>
+            <rule>Design function signatures to make impossible states unrepresentable</rule>
+            <rule>Prefer throwing exceptions over returning error codes or null</rule>
+        </signatures>
+        
+        <implementation>
+            <rule>Implement the smallest piece of functionality that makes sense in isolation</rule>
+            <rule>Avoid mixing different levels of abstraction within a single function</rule>
+            <rule>Minimize state changes and side effects</rule>
+            <rule>Document non-obvious side effects in method comments</rule>
+            <rule>Avoid feature envy (methods that primarily use another object's data)</rule>
+            <rule>Make complex conditions readable using well-named helper methods</rule>
+        </implementation>
+    </function_design>
+    
+    <code_clarity>
+        <naming_practices>
+            <rule>Name variables based on problem domain concepts, not implementation details</rule>
+            <rule>Use consistent verbs for common operations (get, find, compute, calculate)</rule>
+            <rule>Create names with sufficient context to understand their purpose</rule>
+            <rule>Avoid misleading names or abbreviations</rule>
+            <rule>Name boolean variables as predicates (isValid, hasPermission)</rule>
+            <rule>Give opposite operations opposite names (add/remove, create/destroy)</rule>
+        </naming_practices>
+        
+        <commenting_guidelines>
+            <rule>Write comments that explain WHY not WHAT (code shows what, comments show why)</rule>
+            <rule>Document unexpected behavior or counterintuitive implementations</rule>
+            <rule>Comment complex algorithms with explanation of the approach</rule>
+            <rule>Include links to external resources (articles, issue trackers) for complex logic</rule>
+            <rule>Document performance characteristics for critical operations</rule>
+            <rule>Update comments when code changes to prevent misleading documentation</rule>
+        </commenting_guidelines>
+        
+        <formatting_rules>
+            <rule>Maintain consistent indentation and bracing style</rule>
+            <rule>Group related code blocks together with spacing between unrelated sections</rule>
+            <rule>Align similar code constructs to make patterns and differences obvious</rule>
+            <rule>Keep line length reasonable for readability (80-120 characters)</rule>
+            <rule>Organize methods in a meaningful order (public interface first, implementation details later)</rule>
+            <rule>Use blank lines strategically to create visual paragraphs in code</rule>
+        </formatting_rules>
+    </code_clarity>
 
     <service_separation>
         <rule>Separate concerns across dedicated service components (validation, processing, notification)</rule>
@@ -140,6 +219,35 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Use final/readonly/const for variables that shouldn't change after initialization</rule>
     </defensive_coding>
     
+    <practical_defensive_programming>
+        <parameter_validation>
+            <rule>Validate ALL parameters at method entry points using guard clauses</rule>
+            <rule>For strings: check null/empty and apply appropriate length/format validation</rule>
+            <rule>For numbers: validate ranges and handle edge cases (zero, negative, overflow)</rule>
+            <rule>For collections: check null, emptiness, and validate critical elements</rule>
+            <rule>For complex objects: validate state and critical properties</rule>
+            <rule>Return early when validation fails to reduce nesting and improve readability</rule>
+        </parameter_validation>
+        
+        <state_protection>
+            <rule>Initialize all variables with safe default values</rule>
+            <rule>Make classes immutable where possible</rule>
+            <rule>Use defensive copying when returning mutable state</rule>
+            <rule>Validate object state invariants after operations</rule>
+            <rule>Include assertion checks for critical assumptions</rule>
+            <rule>Avoid shared mutable state between objects</rule>
+        </state_protection>
+        
+        <resource_management>
+            <rule>Use try-with-resources (or language equivalent) for all closeable resources</rule>
+            <rule>Implement proper cleanup in finally blocks when automatic resource management isn't available</rule>
+            <rule>Close resources in the reverse order they were opened</rule>
+            <rule>Handle exceptions during cleanup operations</rule>
+            <rule>Release locks and other non-memory resources explicitly</rule>
+            <rule>Check resource states before operations (is file open, is connection valid)</rule>
+        </resource_management>
+    </practical_defensive_programming>
+    
     <type_safety>
         <rule>Prefer specific types over generic ones (e.g. EmailAddress over String)</rule>
         <rule>Create domain-specific types for important concepts (CustomerId, Money, EmailAddress)</rule>
@@ -149,7 +257,6 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Define explicit return types for all methods</rule>
     </type_safety>
 </error_prevention>
-
 
 <error_handling_framework>
     <core_requirements>
@@ -177,6 +284,35 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Ensure proper resource cleanup through appropriate patterns for the language</rule>
         <rule>Design self-healing mechanisms for recoverable system states</rule>
     </recovery>
+    
+    <error_handling_specifics>
+        <error_categories>
+            <rule>Technical errors: I/O failures, network issues, database errors (recover or fail gracefully)</rule>
+            <rule>Validation errors: Invalid input, state, or configuration (provide clear feedback)</rule>
+            <rule>Business rule violations: Logical conflicts, permission issues (explain cause)</rule>
+            <rule>External service failures: Timeout, unavailable, protocol error (retry with backoff)</rule>
+            <rule>Environmental errors: Missing resources, platform issues (provide diagnostics)</rule>
+            <rule>Unexpected errors: Null references, index out of bounds (fail safely)</rule>
+        </error_categories>
+        
+        <error_responses>
+            <rule>Technical users: Provide detailed error information for debugging</rule>
+            <rule>End users: Show friendly messages without technical details</rule>
+            <rule>APIs: Return structured error responses with type, message, and code</rule>
+            <rule>Include correlation IDs in all error responses for log correlation</rule>
+            <rule>Hide implementation details that might expose vulnerabilities</rule>
+            <rule>Log complete technical details while restricting what's returned to callers</rule>
+        </error_responses>
+        
+        <error_recovery>
+            <rule>Implement automatic retry with exponential backoff for transient failures</rule>
+            <rule>Create fallback mechanisms for non-critical functionality</rule>
+            <rule>Restore system to consistent state after errors</rule>
+            <rule>Release or rollback resources and transactions on error paths</rule>
+            <rule>Degrade gracefully when dependent services fail</rule>
+            <rule>Cache previous valid responses for use during outages</rule>
+        </error_recovery>
+    </error_handling_specifics>
 </error_handling_framework>
 
 <observability_framework>
@@ -188,6 +324,37 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Log all exceptions with full stack traces and contextual information</rule>
         <rule>Implement performance logging for critical business operations</rule>
     </logging>
+    
+    <logging_implementation>
+        <when_to_log>
+            <rule>Log application startup with configuration details (sanitized)</rule>
+            <rule>Log entry/exit of API boundaries and service interfaces</rule>
+            <rule>Log all exceptions with full context before they're handled</rule>
+            <rule>Log business-critical operations with before/after state</rule>
+            <rule>Log authentication and authorization decisions</rule>
+            <rule>Log unexpected conditions even when recoverable</rule>
+            <rule>Log performance metrics for critical operations</rule>
+        </when_to_log>
+        
+        <log_content>
+            <rule>Include timestamp, severity, component name, and correlation ID in all logs</rule>
+            <rule>Add relevant contextual data to understand the operation (userId, resourceId)</rule>
+            <rule>For exceptions: include exception type, message, stack trace, and cause</rule>
+            <rule>Include operation outcomes and key result values (sanitized)</rule>
+            <rule>Format multi-line logs to be easily parseable</rule>
+            <rule>Use consistent terminology and formatting in log messages</rule>
+            <rule>Avoid logging sensitive data (passwords, tokens, PII)</rule>
+        </log_content>
+        
+        <log_levels>
+            <rule>ERROR: Use for exceptions and errors that affect functionality</rule>
+            <rule>WARN: Use for unexpected situations that don't fail operations</rule>
+            <rule>INFO: Use for significant operations and state changes</rule>
+            <rule>DEBUG: Use for detailed troubleshooting information</rule>
+            <rule>TRACE: Use for highly detailed program flow information</rule>
+            <rule>Configure appropriate default log level for different environments</rule>
+        </log_levels>
+    </logging_implementation>
 
     <monitoring>
         <rule>Implement health check endpoints to verify system and dependency status</rule>
@@ -213,6 +380,35 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Follow principle of least privilege for all operations</rule>
         <rule>Implement proper content security policies and CORS controls for web applications</rule>
     </data_protection>
+    
+    <data_protection_techniques>
+        <input_validation>
+            <rule>Apply strict input validation at all system boundaries</rule>
+            <rule>Validate data type, length, format, and range for all inputs</rule>
+            <rule>Use allowlist (whitelist) validation rather than blocklist (blacklist)</rule>
+            <rule>Normalize inputs before validation (trim strings, standardize formats)</rule>
+            <rule>Apply context-specific validation rules (e.g., HTML escaping for web output)</rule>
+            <rule>Reject invalid input rather than attempting to "fix" it silently</rule>
+        </input_validation>
+        
+        <output_encoding>
+            <rule>Encode all output appropriate to its context (HTML, SQL, command line, etc.)</rule>
+            <rule>Use framework-provided encoding functions rather than custom implementations</rule>
+            <rule>Apply HTML encoding before inserting dynamic data into web pages</rule>
+            <rule>Use parameterized queries for all database operations</rule>
+            <rule>Apply proper JSON/XML encoding for API responses</rule>
+            <rule>Escape command-line arguments when executing system commands</rule>
+        </output_encoding>
+        
+        <secure_defaults>
+            <rule>Implement restrictive default permissions (deny by default)</rule>
+            <rule>Default to most secure options in configuration</rule>
+            <rule>Initialize security controls early in application lifecycle</rule>
+            <rule>Apply least-privilege principle to all operations</rule>
+            <rule>Require explicit opt-in for dangerous operations</rule>
+            <rule>Validate security controls during startup</rule>
+        </secure_defaults>
+    </data_protection_techniques>
     
     <vulnerabilities>
         <rule>Prevent common security vulnerabilities specific to the implementation technology</rule>
@@ -248,6 +444,35 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Test both happy paths and error cases thoroughly</rule>
         <rule>Include contract tests for service interfaces</rule>
     </test_implementation>
+    
+    <practical_testing>
+        <test_priorities>
+            <rule>Test complex business logic exhaustively</rule>
+            <rule>Test error handling paths to ensure proper recovery</rule>
+            <rule>Test boundary conditions and edge cases explicitly</rule>
+            <rule>Test representative use cases that reflect real-world usage</rule>
+            <rule>Test performance characteristics for critical operations</rule>
+            <rule>Focus test effort proportionally to code risk and importance</rule>
+        </test_priorities>
+        
+        <test_structure>
+            <rule>Arrange: Set up preconditions and inputs</rule>
+            <rule>Act: Execute the function/method being tested</rule>
+            <rule>Assert: Verify expected outcomes and state changes</rule>
+            <rule>Cleanup: Restore system to initial state when necessary</rule>
+            <rule>Create reusable setup and utility methods for common test operations</rule>
+            <rule>Make each test independent and able to run in isolation</rule>
+        </test_structure>
+        
+        <test_quality>
+            <rule>Write tests that would catch likely bugs</rule>
+            <rule>Create readable test names that describe the scenario being tested</rule>
+            <rule>Test both positive scenarios (correct usage) and negative scenarios (error handling)</rule>
+            <rule>Avoid testing implementation details that might change</rule>
+            <rule>Mock external dependencies to isolate the code under test</rule>
+            <rule>Implement test data builders for complex object creation</rule>
+        </test_quality>
+    </practical_testing>
 </testability_framework>
 
 <performance_requirements>
@@ -308,5 +533,4 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Document common pitfalls or gotchas in high-risk areas of the code</rule>
         <rule>Use consistent terminology across documentation and code</rule>
     </knowledge_sharing>
-
 </deliverables>
