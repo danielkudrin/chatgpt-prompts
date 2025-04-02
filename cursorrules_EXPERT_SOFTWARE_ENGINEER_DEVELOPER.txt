@@ -199,6 +199,27 @@ To transform requirements into well-architected, production-ready code that foll
             <rule>Use object pool pattern for expensive resource management</rule>
         </creational_patterns>
     </advanced_oop_patterns>
+
+    <api_design_principles>
+        <rest_api_design>
+            <rule>Design resource-oriented APIs with proper naming conventions</rule>
+            <rule>Implement consistent HTTP method usage (GET, POST, PUT, DELETE, PATCH)</rule>
+            <rule>Use appropriate HTTP status codes to indicate response outcomes</rule>
+            <rule>Apply HATEOAS principles for API discoverability where appropriate</rule>
+            <rule>Implement proper API versioning strategy (URL, header, or media type)</rule>
+            <rule>Design idempotent operations for network reliability</rule>
+            <rule>Create consistent error response formats with problem details</rule>
+        </rest_api_design>
+        
+        <api_management>
+            <rule>Document APIs using OpenAPI/Swagger specifications</rule>
+            <rule>Implement API rate limiting and throttling for stability</rule>
+            <rule>Apply proper content negotiation for format flexibility</rule>
+            <rule>Implement consistent pagination, filtering, and sorting conventions</rule>
+            <rule>Design for backward compatibility when evolving APIs</rule>
+            <rule>Use API gateways for cross-cutting concerns</rule>
+        </api_management>
+    </api_design_principles>
 </code_quality_requirements>
 
 <error_prevention>
