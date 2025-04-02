@@ -73,7 +73,7 @@ To transform requirements into well-architected, production-ready code that foll
 <code_quality_requirements>
     <architecture_patterns>
         <modular_monolith>
-            <rule>Organize code around business features or domains rather than technical layers</rule>
+            <rule>Organize code around business features rather than technical layers</rule>
             <rule>Maintain feature cohesion by keeping all related code for a feature in one place</rule>
             <rule>Define explicit module boundaries through dedicated namespaces and assemblies</rule>
             <rule>Create clear contracts between modules using well-defined interfaces</rule>
@@ -85,6 +85,7 @@ To transform requirements into well-architected, production-ready code that foll
             <rule>Implement module-specific persistence when beneficial for autonomy</rule>
             <rule>Create well-defined APIs between modules to facilitate integration</rule>
             <rule>Use events for cross-module communication to reduce direct dependencies</rule>
+            <rule>AVOID THE COMPLEXITY OF DDD (Domain Driven Design/Development)</rule>
         </modular_monolith>
     </architecture_patterns>
 
@@ -136,7 +137,7 @@ To transform requirements into well-architected, production-ready code that foll
     
     <code_clarity>
         <naming_practices>
-            <rule>Name variables based on problem domain concepts, not implementation details</rule>
+            <rule>Name variables based on problem business concepts, not implementation details</rule>
             <rule>Use consistent verbs for common operations (get, find, compute, calculate)</rule>
             <rule>Create names with sufficient context to understand their purpose</rule>
             <rule>Avoid misleading names or abbreviations</rule>
@@ -180,7 +181,6 @@ To transform requirements into well-architected, production-ready code that foll
         </data_access>
     
         <data_modeling>
-            <rule>Design entity relationships based on domain invariants and aggregate boundaries</rule>
             <rule>Implement proper indexing strategies for query performance</rule>
             <rule>Apply appropriate normalization based on query patterns</rule>
             <rule>Use optimistic concurrency control for collaborative environments</rule>
@@ -254,7 +254,7 @@ To transform requirements into well-architected, production-ready code that foll
         <rule>Use guard clauses to handle edge cases early and reduce nesting</rule>
         <rule>Make objects immutable where possible to prevent unexpected state changes</rule>
         <rule>Use builder patterns for complex object creation to ensure valid state</rule>
-        <rule>Implement equals() and hashCode() properly for all domain objects</rule>
+        <rule>Implement equals() and hashCode() properly for all business objects</rule>
         <rule>Use final/readonly/const for variables that shouldn't change after initialization</rule>
     </defensive_coding>
     
@@ -289,7 +289,7 @@ To transform requirements into well-architected, production-ready code that foll
     
     <type_safety>
         <rule>Prefer specific types over generic ones (e.g. EmailAddress over String)</rule>
-        <rule>Create domain-specific types for important concepts (CustomerId, Money, EmailAddress)</rule>
+        <rule>Create business-specific types for important concepts (CustomerId, Money, EmailAddress)</rule>
         <rule>Use type checking and generics to prevent runtime type errors</rule>
         <rule>Avoid type casting - redesign when casting seems necessary</rule>
         <rule>Implement proper nullability annotations where supported</rule>
@@ -571,7 +571,7 @@ To transform requirements into well-architected, production-ready code that foll
     <knowledge_sharing>
         <rule>Include example usage in class or method documentation</rule>
         <rule>Add README.md files to explain module purpose and contained features</rule>
-        <rule>Create a glossary of domain terms for the project</rule>
+        <rule>Create a glossary of business terms for the project</rule>
         <rule>Document common pitfalls or gotchas in high-risk areas of the code</rule>
         <rule>Use consistent terminology across documentation and code</rule>
     </knowledge_sharing>
