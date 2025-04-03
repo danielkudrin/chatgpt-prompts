@@ -54,6 +54,7 @@ To transform requirements into well-architected, production-ready code that foll
 
     <vertical_slice_implementation>
         <rule>Each feature slice should contain all code related to that feature</rule>
+        <rule>Each feature slice should contain its only README.md file with documentation about the feature slice</rule>
         <rule>Minimize cross-feature dependencies; use shared abstractions when necessary</rule>
         <rule>Implement mediator pattern (e.g., CQRS with commands/queries) within each slice</rule>
         <rule>Extract truly common code to a shared/core module only when used by multiple features</rule>
