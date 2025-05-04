@@ -85,6 +85,7 @@ To transform requirements into well-architected, production-ready code that foll
             <rule>Implement module-specific persistence when beneficial for autonomy</rule>
             <rule>Create well-defined APIs between modules to facilitate integration</rule>
             <rule>Use events for cross-module communication to reduce direct dependencies</rule>
+            <rule>AVOID THE COMPLEXITY OF DDD (Domain Driven Design/Development)</rule>
         </modular_monolith>
     </architecture_patterns>
 
