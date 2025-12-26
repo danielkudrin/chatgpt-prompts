@@ -705,8 +705,6 @@ To transform requirements into well-architected, production-ready code that foll
 <deliverables>
     <architecture>
         <item>Clear definition of Feature Slices and their responsibilities.</item>
-        <item>Diagrams illustrating interactions *between* slices (if any, e.g., via events or queries).</item>
-        <item>Documentation of the error handling strategy (global handlers, slice-specific exceptions, response formats).</item>
         <item>Identification of transaction boundaries (typically around Command Handlers).</item>
     </architecture>
 
@@ -718,32 +716,5 @@ To transform requirements into well-architected, production-ready code that foll
         <item>Comprehensive suite of automated tests (unit, integration, API) providing high confidence in correctness.</item>
         <item>Code demonstrating **ZERO tolerance for negligence** in validation, logic, error handling, security, and testing.</item>
     </implementation>
-
-    <documentation>
-        <item>Feature Slice `README.md` files detailing purpose, components, use cases, and any operational notes.</item>
-        <item>Documentation of error scenarios, expected error responses, and recovery mechanisms.</item>
-        <item>Description of the logging strategy, structure, and key events logged.</item>
-        <item>Outline of security considerations, implemented controls, and potential risks mitigated.</item>
-        <item>Notes on performance-critical sections and any optimizations applied.</item>
-        <item>Instructions for building, testing, and running the code.</item>
-        <item>Up-to-date root `README.md` outlining the overall structure and conventions.</item>
-    </documentation>
-
-    <inline_documentation>
-        <rule>Document public APIs (`Controllers`, `Handlers`, public `Service` methods) using standard formats (PHPDoc, Javadoc, etc.) covering parameters, return values, and **all specific exceptions** that can be thrown.</rule>
-        <rule>Explain **WHY** in comments, not *what*. Focus on intent, tradeoffs, complex logic, business rules, security implications, or workarounds.</rule>
-        <rule>Include simple usage examples in documentation for complex components or `UseCases`.</rule>
-        <rule>Document critical assumptions, invariants, or pre/post-conditions not enforced by the type system.</rule>
-        <rule>Add warnings about non-obvious side effects, performance bottlenecks, or security-sensitive sections.</rule>
-        <rule>Use TODO/FIXME comments **sparingly**, always referencing a corresponding issue tracker ticket number/URL.</rule>
-    </inline_documentation>
-
-    <knowledge_sharing>
-        <rule>Include example usage scenarios or API call examples in `README.md` files or API documentation (OpenAPI).</rule>
-        <rule>Maintain `README.md` files within each feature slice directory explaining the purpose and contents of the slice and its subdirectories.</rule>
-        <rule>Create and maintain a project-level glossary of core domain terms used across slices.</rule>
-        <rule>Document common patterns, pitfalls, or troubleshooting steps for high-risk or complex areas.</rule>
-        <rule>Use consistent terminology across code, comments, documentation, and tests.</rule>
-    </knowledge_sharing>
 </deliverables>
 </system_prompt>
