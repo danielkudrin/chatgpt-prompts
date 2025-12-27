@@ -1,0 +1,151 @@
+# "Did You Do It?" Checklist
+
+## 1. No Magic Strings
+- [ ] No hardcoded colors (e.g., `text-white`, `bg-black`, `text-blue-500`)
+- [ ] No hardcoded sizes or spacing values (e.g., `p-[16px]`, `w-[200px]`)
+- [ ] All text content extracted to constants or i18n files
+- [ ] API endpoints defined as constants
+- [ ] Configuration values properly typed and centralized
+- [ ] Status values use enums or const objects
+- [ ] No inline style objects with hardcoded values
+
+## 2. Logic Separated from Views
+- [ ] Business logic extracted to custom hooks (e.g., `useServerManagement`, `useDashboard`)
+- [ ] Data fetching separated from UI components
+- [ ] Complex calculations moved to utility functions
+- [ ] State management logic in dedicated hooks or stores
+- [ ] Event handlers contain minimal inline logic
+- [ ] Validation logic extracted to schemas (Zod) or utility functions
+- [ ] Components focus on presentation, not business rules
+
+## 3. Shadcn Component Usage
+- [ ] Used shadcn components from MCP server registries instead of building custom
+- [ ] Checked for existing components before creating new ones (Button, Card, Tabs, ScrollArea, Separator, etc.)
+- [ ] Properly customized shadcn components via variants, not inline overrides
+- [ ] No duplicate UI components that shadcn already provides
+- [ ] Followed shadcn component composition patterns
+- [ ] Used component examples from registries when available
+
+## 4. Design Tokens Used
+- [ ] **ZERO** direct color classes (`text-white`, `bg-black`, `text-blue-500`, etc.)
+- [ ] All colors use semantic tokens (`bg-background`, `text-foreground`, `bg-primary`, `text-muted-foreground`)
+- [ ] Border radius uses design system tokens (`rounded-lg`, `rounded-md`, `rounded-sm`)
+- [ ] Spacing follows Tailwind scale, no arbitrary values unless in design system
+- [ ] Shadows use design tokens if defined in `index.css`
+- [ ] Gradients defined in design system, not inline
+- [ ] All design tokens defined in `index.css` with proper light/dark mode support
+- [ ] Custom variants use design tokens, not hardcoded values
+
+## 5. Layout Method Priority
+- [ ] **Flexbox** used for 1D layouts (`flex`, `items-center`, `justify-between`)
+- [ ] **CSS Grid** used only for 2D layouts (`grid`, `grid-cols-*`)
+- [ ] **Gap** classes used for spacing, not margins (`gap-4`, `gap-x-2`, `gap-y-6`)
+- [ ] **NO** `space-y-*` or `space-x-*` classes (legacy anti-pattern)
+- [ ] **NO** `mb-*`, `mt-*`, `mr-*`, `ml-*` for layout spacing (breaks encapsulation)
+- [ ] Padding for internal spacing, gap for layout spacing
+- [ ] No floats or absolute positioning unless absolutely necessary
+- [ ] Responsive layout uses Tailwind breakpoints (`md:flex-row`, `lg:grid-cols-3`)
+
+## 6. VSA Architecture (Vertical Slice Architecture)
+- [ ] Features organized by domain in `src/features/*`
+- [ ] Each feature contains its own components, hooks, types, and utilities
+- [ ] No cross-feature component imports (shared components in `src/components/ui`)
+- [ ] Feature-specific logic stays within the feature directory
+- [ ] Proper separation: `/components`, `/hooks`, `/types`, `/utils` within each feature
+- [ ] Shared utilities in `src/lib`, not scattered across features
+- [ ] Clear feature boundaries and minimal coupling
+
+## 7. Production Ready
+- [ ] **Loading states** implemented for async operations
+- [ ] **Empty states** with helpful messages and actions
+- [ ] **Error boundaries** or error handling for critical features
+- [ ] **No console.log** statements in production code
+- [ ] **No commented-out code** blocks
+- [ ] All TypeScript types are strict, no `any` types
+- [ ] Error messages are user-friendly, not technical stack traces
+- [ ] Graceful degradation for failed requests
+- [ ] Proper cleanup in useEffect hooks (return cleanup functions)
+
+## 8. Typography
+- [ ] Maximum **2 font families** total (one for headings, one for body)
+- [ ] Fonts defined in design system (`font-sans`, `font-serif`, `font-mono`)
+- [ ] Line height set appropriately (`leading-relaxed`, `leading-6` for body text)
+- [ ] Text elements use `text-balance` or `text-pretty` for optimal line breaks
+- [ ] No decorative fonts for body text or small text
+- [ ] Headings use proper semantic hierarchy (H1 → H2 → H3)
+- [ ] Font sizes use Tailwind scale, not arbitrary values
+
+## 9. Color Palette Constraints
+- [ ] **3-5 colors total** (1 primary, 2-3 neutrals, 1-2 accents)
+- [ ] Colors defined in `index.css` with HSL values
+- [ ] Light and dark mode variants defined for all colors
+- [ ] **NO purple/violet** unless explicitly requested
+- [ ] Gradients avoided unless explicitly requested
+- [ ] If gradients used: analogous colors only, max 2-3 stops
+- [ ] Color combinations have proper contrast ratios
+- [ ] Consistent color usage across the app
+
+## 10. Responsive Design
+- [ ] Works on mobile (320px+), tablet (768px+), and desktop (1024px+)
+- [ ] Uses Tailwind responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`)
+- [ ] Layout adapts to screen size (stacked on mobile, grid on desktop)
+- [ ] Touch targets are appropriate size on mobile (min 44x44px)
+- [ ] Text is readable on all screen sizes
+- [ ] Images and media scale appropriately
+- [ ] No horizontal scrolling on small screens
+- [ ] Navigation adapts for mobile (hamburger menu, etc.)
+
+## 11. Component Organization & Imports
+- [ ] Small, focused components instead of monolithic files
+- [ ] Unique component and file names (no duplicates)
+- [ ] Proper import paths (absolute imports configured)
+- [ ] No circular dependencies
+- [ ] Related components grouped logically
+- [ ] Barrel exports (`index.ts`) used appropriately
+- [ ] TypeScript imports are clean and organized
+- [ ] Shared components in `src/components/ui`
+- [ ] Feature components in `src/features/[feature]/components`
+
+## 12. Toast (sonner) Notifications & User Feedback
+- [ ] `sonner` installed and configured
+- [ ] Toast notifications for important user actions (success, error, info)
+- [ ] Form submissions show success/error feedback
+- [ ] Delete/destructive actions show confirmation
+- [ ] API errors display user-friendly toast messages
+- [ ] Loading indicators for operations taking >200ms
+- [ ] Optimistic UI updates where appropriate
+- [ ] No silent failures
+
+## 13. Loading & Error States
+- [ ] All async operations have loading states
+- [ ] Loading skeletons or spinners for content
+- [ ] Error states with retry mechanisms
+- [ ] Empty states for no data scenarios
+- [ ] Network error handling with helpful messages
+- [ ] Timeout handling for long-running requests
+- [ ] Proper TypeScript types for loading/error states
+- [ ] Suspense boundaries where appropriate
+
+## 14. Accessibility & Contrast
+- [ ] Semantic HTML (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`)
+- [ ] All images have descriptive `alt` attributes
+- [ ] Color contrast meets WCAG AA standards (4.5:1 for text)
+- [ ] If background color overridden, text color also overridden
+- [ ] Dark mode styles properly implemented (no white text on white background)
+- [ ] Interactive elements have focus states
+- [ ] Form inputs have labels
+- [ ] ARIA attributes where needed
+- [ ] Keyboard navigation works properly
+- [ ] Screen reader friendly
+
+## 15. Build & Type Safety
+- [ ] `npm run build` completes without errors
+- [ ] No TypeScript errors (`tsc` passes)
+- [ ] No ESLint errors (or documented exceptions)
+- [ ] All imports resolve correctly
+- [ ] No unused variables or imports
+- [ ] Strict TypeScript configuration
+- [ ] All props properly typed
+- [ ] Event handlers properly typed
+- [ ] No implicit `any` types
+- [ ] Build output is optimized
