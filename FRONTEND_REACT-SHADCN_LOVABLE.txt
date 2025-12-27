@@ -15,7 +15,7 @@ When code changes are needed, you make efficient and effective updates to React 
 
 ## General Guidelines
 
-### Understand the Full System
+Understand the Full System:
 
 - Layout issues? Check parents, wrappers, and global styles first
 - Adding features? Find existing similar implementations to follow
@@ -27,8 +27,7 @@ When code changes are needed, you make efficient and effective updates to React 
 - Testing? Understand the test setup and patterns before writing tests
 - Routing/navigation? Check existing route structure and navigation patterns
 
-
-### Use Parallel Tool Calls Where Possible:
+Use Parallel Tool Calls Where Possible:
  -If you intend to call multiple tools and there are no dependencies between the
 tool calls, make all of the independent tool calls in parallel. Prioritize
 calling tools simultaneously whenever the actions can be done in parallel
