@@ -1,0 +1,289 @@
+# Did you check your code for this? If not - refactor and update your code.
+
+---
+
+## 1. Directory Structure & Organization
+
+- [ ] Code organized into feature slices at top-level (`src/Feature/`)
+- [ ] Each slice contains only relevant subdirectories: `Controllers/`, `Commands/`, `Models/`, `Repositories/`, `UseCases/`, `Services/`, `Events/`, `Listeners/`, `Exceptions/`, `Helpers/`, `DTOs/`
+- [ ] `UseCases/` contains sub-directories per use case (e.g., `UseCases/ProcessOrder/`)
+- [ ] Each use case directory has: Handler, Command/Query, and optional Response
+- [ ] No code related to a feature exists outside its slice
+- [ ] Cross-cutting code extracted to shared/core module only when used by multiple features
+
+---
+
+## 2. Naming Conventions
+
+- [ ] Controllers/Commands named after the Use Case they invoke (e.g., `ProcessOrderController.php`)
+- [ ] Handler classes follow pattern: `{UseCase}Handler`
+- [ ] Command/Query objects follow pattern: `{UseCase}Command` / `{UseCase}Query`
+- [ ] Consistent verb usage (`find`, `get`, `save`, `create`, `process`, `validate`, `handle`)
+- [ ] Boolean names are predicates (`isValid`, `hasPermission`, `canProcess`)
+- [ ] No cryptic abbreviations or generic names (`data`, `item`, `manager`)
+
+---
+
+## 3. Dependency Management
+
+- [ ] All dependencies injected via constructor
+- [ ] No static calls (except pure utility functions)
+- [ ] No global state or service locator pattern
+- [ ] Dependencies documented via typed constructor parameters
+- [ ] Shallow dependency graphs within slices
+- [ ] Interfaces used only when genuine abstraction needed
+
+---
+
+## 4. Input Validation
+
+- [ ] ALL inputs validated at system boundaries (Controllers, Commands)
+- [ ] Strings: null/empty/whitespace, length, format, allowed characters
+- [ ] Numbers: required, range, sign, precision (Decimal for currency)
+- [ ] Collections: null, emptiness, size limits
+- [ ] Complex objects: internal state and required properties validated
+- [ ] Guard clauses used for early return on validation failure
+- [ ] 4xx errors returned with clear validation failure details
+- [ ] Allowlist-based validation (not blocklist)
+- [ ] Input normalization before validation (trim, case conversion)
+
+---
+
+## 5. Error Handling
+
+- [ ] Every public method has comprehensive error handling
+- [ ] Custom exceptions in `Exceptions/` for feature-specific errors
+- [ ] Exceptions contained within slice boundaries
+- [ ] Try-catch for ALL external service calls and I/O operations
+- [ ] Transaction rollback on exceptions
+- [ ] User-friendly messages for UI, detailed logs for developers
+- [ ] Correlation IDs in all error responses and logs
+- [ ] No stack traces or internal details exposed to end users
+- [ ] RFC 7807 Problem Details format for API errors
+- [ ] Error categories handled correctly:
+  - [ ] Technical errors → 5xx
+  - [ ] Validation errors → 400/422
+  - [ ] Business rule violations → 4xx with explanation
+  - [ ] External service failures → retry/circuit breaker → 502/504
+
+---
+
+## 6. Error Recovery
+
+- [ ] Retry with exponential backoff and jitter for transient failures
+- [ ] Circuit breakers for frequently failing dependencies
+- [ ] Fallback mechanisms for non-critical failures
+- [ ] Resource cleanup in `finally` blocks / resource management constructs
+- [ ] Idempotent command handlers where appropriate
+
+---
+
+## 7. Logging & Observability
+
+- [ ] Structured logging (JSON format)
+- [ ] Correlation ID in EVERY log entry
+- [ ] Appropriate log levels used (ERROR, WARN, INFO, DEBUG, TRACE)
+- [ ] Log entry/exit of: Controllers, Handlers, Repositories, External Services
+- [ ] All caught exceptions logged with full stack trace
+- [ ] Performance logging (duration) for critical operations
+- [ ] Mandatory fields: timestamp, level, message, correlationId, applicationName, featureSlice
+- [ ] NO sensitive data logged (passwords, API keys, PII, tokens)
+- [ ] Startup/shutdown events logged
+
+---
+
+## 8. Security
+
+- [ ] ALL external inputs sanitized at boundaries
+- [ ] Authentication implemented for every endpoint
+- [ ] Fine-grained authorization before business logic execution
+- [ ] TLS for data in transit
+- [ ] Encryption for sensitive data at rest
+- [ ] Parameterized queries (NO string concatenation for SQL)
+- [ ] Output encoding for context (HTML, URL, JavaScript, CSS)
+- [ ] Security headers implemented (CSP, HSTS, X-Frame-Options, etc.)
+- [ ] CSRF protection enabled
+- [ ] Rate limiting on auth endpoints
+- [ ] File upload validation (type, size, extension, content)
+- [ ] Default permissions = deny all
+- [ ] Debug modes disabled in production
+
+---
+
+## 9. Auditing
+
+- [ ] Security events logged (login success/failure, auth failures)
+- [ ] Business transactions logged (create/modify/delete)
+- [ ] Admin actions logged
+- [ ] Audit logs include: timestamp, user ID, source IP, event type, resource, outcome
+- [ ] Audit logs tamper-evident
+- [ ] Audit logs stored securely
+
+---
+
+## 12. Performance & Scalability
+
+- [ ] Caching implemented where appropriate
+- [ ] Async processing for long-running tasks (jobs/queues)
+- [ ] Database queries optimized (indexing, no N+1, minimal columns)
+- [ ] Handlers and Services are stateless
+- [ ] Connection pooling configured
+- [ ] Concurrency control (optimistic locking where needed)
+- [ ] External service calls minimized/cached
+
+---
+
+## 13. API Design (if applicable)
+
+- [ ] Resource-oriented endpoints
+- [ ] Correct HTTP methods (GET=query, POST/PUT/PATCH/DELETE=commands)
+- [ ] Appropriate HTTP status codes
+- [ ] API versioning strategy implemented
+- [ ] Idempotent command operations where feasible
+- [ ] Consistent pagination/filtering/sorting
+- [ ] OpenAPI/Swagger documentation
+
+---
+
+## 14. Cross-Feature Communication
+
+- [ ] Communication via Events (preferred)
+- [ ] Query Use Cases can read via other slice's Repository (by ID)
+- [ ] Direct Handler dependencies discouraged
+- [ ] Mediator pattern used for all actions/queries
+
+---
+
+## 15. Configuration
+
+- [ ] No secrets in code
+- [ ] Environment variables / secure config management used
+- [ ] Configuration validated on startup
+- [ ] Configuration objects immutable after initialization
+- [ ] Health check endpoints implemented (`/health`, `/health/live`, `/health/ready`)
+
+---
+
+  
+16. Jobs / Queue Processing
+Job Structure & Organization
+[ ] Jobs located in Jobs/ directory within the feature slice
+[ ] Job class named descriptively after its action (e.g., SendOrderConfirmationJob, ProcessPaymentJob)
+[ ] Job implements appropriate interface/contract for the queue system
+[ ] Job is serializable (no unserializable dependencies like closures, DB connections)
+Job Implementation
+[ ] Job constructor accepts only primitive/serializable data (IDs, not full models)
+[ ] Dependencies resolved in handle() method via DI, not constructor
+[ ] Job fetches fresh data from database (not stale serialized state)
+[ ] User ID / context preserved for authorization and audit logging
+[ ] Correlation ID propagated from original request to job
+Error Handling in Jobs
+[ ] Try-catch wrapping all job logic
+[ ] Specific exceptions caught and handled appropriately
+[ ] Failed jobs logged with full context (job class, payload, exception, stack trace)
+[ ] $tries / max attempts configured appropriately
+[ ] $backoff / retry delay configured (exponential backoff preferred)
+[ ] $timeout configured to prevent runaway jobs
+[ ] failed() method implemented for cleanup/notification on permanent failure
+[ ] Dead letter queue / failed job handling strategy defined
+Idempotency & Safety
+[ ] Job is idempotent (safe to retry without side effects)
+[ ] Duplicate detection implemented where needed (idempotency keys)
+[ ] Database transactions used within job where appropriate
+[ ] External service calls have retry/circuit breaker logic
+[ ] Partial failure handled (what if job fails mid-execution?)
+Job Monitoring & Observability
+[ ] Job start logged with payload (sanitized)
+[ ] Job completion logged with duration and outcome
+[ ] Job failure logged with full exception details
+[ ] Queue length/depth monitored
+[ ] Job processing time monitored
+[ ] Failed job count alerted on threshold
+Queue Configuration
+[ ] Appropriate queue/connection selected for job type
+[ ] High-priority vs low-priority jobs separated
+[ ] Rate limiting configured for external API calls
+[ ] Concurrency limits set to prevent resource exhaustion
+[ ] Queue workers configured for graceful shutdown
+
+
+17. Database
+Schema & Migrations
+[ ] Migrations located in migrations/ within feature slice (or centralized per project convention)
+[ ] Migrations are reversible (down() method implemented)
+[ ] Migration names are timestamped and descriptive
+[ ] No destructive migrations without explicit data preservation strategy
+[ ] Foreign key constraints defined where appropriate
+[ ] Indexes created for frequently queried columns
+[ ] Composite indexes for common multi-column queries
+[ ] Unique constraints enforced at DB level (not just application)
+Data Types & Constraints
+[ ] Appropriate column types used (not everything as VARCHAR(255))
+[ ] NOT NULL constraints where data is required
+[ ] Default values set where appropriate
+[ ] Check constraints for valid ranges/values (if DB supports)
+[ ] DECIMAL used for monetary values (not FLOAT)
+[ ] TIMESTAMP / DATETIME with timezone awareness
+[ ] Text fields have appropriate length limits
+[ ] Enum values use database enums or lookup tables (not magic strings)
+Query Safety
+[ ] ALL queries use parameterized statements / query builder
+[ ] NO string concatenation for SQL construction
+[ ] Raw queries (if any) are justified and reviewed for injection
+[ ] User input NEVER directly interpolated into queries
+[ ] Column/table names validated if dynamic (allowlist only)
+Query Performance
+[ ] N+1 queries eliminated (eager loading where needed)
+[ ] Only necessary columns selected (no SELECT * in production code)
+[ ] Pagination implemented for large result sets
+[ ] Query execution time logged for slow queries
+[ ] EXPLAIN / query plan analyzed for critical queries
+[ ] Bulk operations used instead of loops (batch insert/update/delete)
+[ ] Avoid querying inside loops
+Connection Management
+[ ] Connection pooling configured appropriately
+[ ] Connections released/closed properly (no leaks)
+[ ] Connection timeouts configured
+[ ] Retry logic for transient connection failures
+[ ] Read replicas used for read-heavy operations (if applicable)
+Transactions
+[ ] Transaction boundaries clearly defined (typically around Use Case Handler)
+[ ] Transactions kept as short as possible
+[ ] No external HTTP calls inside transactions
+[ ] Automatic rollback on exceptions
+[ ] Nested transaction handling understood and correct
+[ ] Deadlock detection and retry implemented
+[ ] Isolation level appropriate for use case
+Concurrency Control
+[ ] Optimistic locking (version / updated_at column) for concurrent updates
+[ ] Pessimistic locking used sparingly and with timeouts
+[ ] Race conditions identified and mitigated
+[ ] SELECT FOR UPDATE used correctly when needed
+[ ] Atomic operations preferred over read-modify-write
+Data Integrity
+[ ] Foreign key constraints prevent orphaned records
+[ ] Cascading deletes/updates configured intentionally (not by accident)
+[ ] Soft deletes implemented if required (with deleted_at filtering)
+[ ] Audit columns present (created_at, updated_at, created_by, updated_by)
+[ ] Data validation at DB level complements application validation
+Backup & Recovery
+[ ] Backup strategy documented
+[ ] Point-in-time recovery capability verified
+[ ] Data retention policies defined
+[ ] Sensitive data masking in non-production environments
+Repository Pattern Compliance
+[ ] Repository encapsulates all data access for the feature's models
+[ ] Complex queries in dedicated repository methods (not in handlers)
+[ ] Repository methods have clear, descriptive names
+[ ] Repository returns domain models, not raw arrays/objects
+[ ] No Eloquent/ORM calls directly in Controllers or Handlers
+
+## Quick Spot-Check Questions
+
+1. **Can you trace any input from entry point through validation?**
+2. **What happens if the database is down during this operation?**
+3. **What happens if the external service times out?**
+4. **Is there any path where an exception goes unhandled?**
+5. **Could this log statement expose sensitive data?**
+7. **Does this controller/command check authorization?**
+8. **Is the correlation ID propagated through all calls?**
