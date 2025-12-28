@@ -121,15 +121,28 @@
 
 ---
 
+10. Code Quality
+[ ] Explicit return types on all methods
+[ ] Parameter type hints on all methods
+[ ] Cyclomatic complexity < 10
+[ ] Method length < 30 lines
+[ ] Single responsibility per method
+[ ] Early returns (guard clauses)
+[ ] Parameters ≤ 3 (use DTOs for more)
+[ ] No magic strings/numbers (use constants/config)
+[ ] Models/DTOs immutable where possible
+[ ] final/readonly/const used aggressively
+[ ] Not a god class
+
+---
+
 ## 12. Performance & Scalability
 
-- [ ] Caching implemented where appropriate
 - [ ] Async processing for long-running tasks (jobs/queues)
 - [ ] Database queries optimized (indexing, no N+1, minimal columns)
 - [ ] Handlers and Services are stateless
 - [ ] Connection pooling configured
 - [ ] Concurrency control (optimistic locking where needed)
-- [ ] External service calls minimized/cached
 
 ---
 
