@@ -287,3 +287,15 @@ Repository Pattern Compliance
 5. **Could this log statement expose sensitive data?**
 7. **Does this controller/command check authorization?**
 8. **Is the correlation ID propagated through all calls?**
+Quick Database & Job Spot-Checks
+Area	Question
+Jobs	What happens if this job runs twice with the same data?
+Jobs	What happens if the job fails after partial completion?
+Jobs	Is the user/tenant context available in the job?
+Jobs	How long until a failed job is retried? How many times?
+Jobs	Can this job cause a queue backup under load?
+Database	Is there an index for this WHERE clause?
+Database	Could this query return millions of rows?
+Database	What happens if two users update this record simultaneously?
+Database	Is this query inside a loop?
+Database	What gets rolled back if this operation fails halfway?
